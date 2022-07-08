@@ -31,7 +31,7 @@ function App() {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error.statusText}</div>;
+    return <div>Error: {error.message}</div>;
   }
 
   return (
