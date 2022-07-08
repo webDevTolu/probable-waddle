@@ -1,33 +1,13 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import useFetch from "react-fetch-hook";
 
 function App() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // has to be isLoading, not loading
+  const { isLoading, error, data } = useFetch(
+    "https://teaminnovation-endpoint.herokuapp.com/eoi-list/"
+  );
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    // can also use fetch() instead of axios
-    await axios("https://teaminnovation-endpoint.herokuapp.com/eoi-list/")
-      .then((res) => {
-        setData(res.data);
-      })
-      // if there's an error, set the error to the error
-      .catch((error) => {
-        console.log("Error fetching Data: ", error);
-        setError(error);
-      })
-      // after the fetch, set loading to false
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   if (error) {
