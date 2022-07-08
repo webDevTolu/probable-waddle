@@ -7,7 +7,12 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios("https://teaminnovation-endpoint.herokuapp.com/eoi-list/")
+    getData();
+  }, []);
+  
+  const getData = async () => {
+    // can also use fetch() instead of axios
+    await axios("https://teaminnovation-endpoint.herokuapp.com/eoi-list/")
       .then((res) => {
         setData(res.data);
       })
@@ -20,7 +25,7 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+    }
 
   if (loading) {
     return <div>Loading...</div>;
