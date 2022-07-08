@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useQuery } from "react-query";
+
+const getData = async () => {
+  const response = await fetch(
+    "https://teaminnovation-endpoint.herokuapp.com/eoi-list/"
+  );
+
+  return response.json();
+};
 
 function App() {
+  const { isLoading, error, data } = useQuery("userData", getData);
+
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      {data.map((dataItem) => (
+        <p key={dataItem.id}>{dataItem.fullname}</p>
+      ))}
     </div>
   );
 }
