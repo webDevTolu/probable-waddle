@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
   const [data, setData] = useState(null);
@@ -6,18 +7,9 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://teaminnovation-endpoint.herokuapp.com/eoi-list/")
-      // checks if the response is ok ✔
+    axios("https://teaminnovation-endpoint.herokuapp.com/eoi-list/")
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // else show the response
-        throw res;
-      })
-      // set the res.json to data
-      .then((data) => {
-        setData(data);
+        setData(res.data);
       })
       // if there's an error, set the error to the error
       .catch((error) => {
